@@ -45,7 +45,13 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        //NOTE
+        //RouteServiceProvider adjusted for slug
+
+        //increase views and save to database, this is laravel helper
+        $question->increment('views');
+
+        return view('questions.show', compact('question'));
     }
 
     /**
