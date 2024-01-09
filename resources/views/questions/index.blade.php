@@ -6,8 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header row">
-                        <h2>All Questions</h2>
-                        <div class="col-md-4 offset-md-8 ">
+                        <div class="col-md-4"><h2>All Questions</h2></div>
+                        <div class="col-md-4 offset-md-4 ">
                             <a href="{{route('questions.create')}}" class="btn btn-outline-secondary float-end">Ask Question</a>
                         </div>
                     </div>
@@ -16,8 +16,8 @@
                 <div class="card-body">
                     @include('layouts._messages')
                     @foreach ($questions as $question)
-                            <div class="media">
-                                <div class="d-inline-flex flex-row-reverse counters">
+                            <div class="row">
+                                <div class="col-md-1 counters">
                                     <div class="vote">
                                         <strong>{{ $question->votes }}</strong> {{ Str::plural('vote', $question->votes) }}
                                     </div>                            
@@ -28,9 +28,14 @@
                                         <strong>{{ $question->views}}</strong> {{Str::plural('view', $question->views)}}
                                     </div>                            
                                 </div>
-                                <div class="media-body">
-                                    <h3 class="mt-0">
-                                        <a href="{{ $question->url }}">{{ $question->title }}</a>
+                                <div class="col-md-11">
+                                    <h3 class="mt-2 row">
+                                        <div class="col-md-10">
+                                            <a href="{{ $question->url }}">{{ $question->title }}</a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="{{route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info float-end">Edit</a>
+                                        </div>
                                     </h3>
                                     <p class="lead">
                                         Asked by

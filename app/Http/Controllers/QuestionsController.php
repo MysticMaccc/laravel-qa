@@ -53,15 +53,20 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view("questions.edit", compact("question"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Question $question)
+    public function update(QuestionRequest $request, Question $question)
     {
-        //
+        $question->update([
+            'title' => $request->title,
+            'body' => $request->body
+        ]);
+
+        return redirect()->route('questions.index')->with('success', 'Your question has been updated!');
     }
 
     /**
