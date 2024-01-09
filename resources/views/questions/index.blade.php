@@ -34,7 +34,8 @@
                                             <a href="{{ $question->url }}">{{ $question->title }}</a>
                                         </div>
                                         <div class="col-md-2">
-                                            @can('update-question', $question)
+                                            {{-- authorization using gates --}}
+                                            {{-- @can('update-question', $question)
                                                 <a href="{{route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info float-end">Edit</a>
                                             @endcan
                                             @can('delete-question', $question)
@@ -44,8 +45,19 @@
                                                     <button type="submit" class="btn btn-sm btn-outline-danger float-end" 
                                                     onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                                                 </form>
-                                            @endcan
+                                            @endcan --}}
                                             
+                                            @can('update', $question)
+                                                <a href="{{route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info float-end">Edit</a>
+                                            @endcan
+                                            @can('delete', $question)
+                                                <form action="{{route('questions.destroy', $question->id)}}" method="POST">
+                                                    @method('DELETE')    
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger float-end" 
+                                                    onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </h3>
                                     <p class="lead">
