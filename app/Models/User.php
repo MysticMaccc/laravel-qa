@@ -44,11 +44,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    //RELATIONSHIP
     public function questions()
     {
         return $this->hasMany(Question::class);
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    //ENCAPSULATION
     public function getUrlAttribute()
     {
         // return route("question.show", $this->id);
