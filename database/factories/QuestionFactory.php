@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Question;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,7 @@ class QuestionFactory extends Factory
             'views' => rand(0, 10),
             // 'answers_count' => rand(0, 10),
             'votes' => rand(-3, 10),
-            'user_id' => rand(1 , 3)
+            'user_id' => User::pluck('id')->random()
         ];
     }
 }
