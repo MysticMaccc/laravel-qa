@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Answer extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'body', 'user_id'
+    ];
 
     // RELATIONSHIP
     public function question()
