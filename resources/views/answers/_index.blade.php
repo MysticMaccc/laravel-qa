@@ -21,28 +21,50 @@
                                                 <i class="fas fa-check fa-2x"></i>
                                             </a>
                                     </div>
-                                    <div class="col-md-10">
-                                            {!! $answer->body_html !!}
+                                    <div class="col-md-10 row">
+                                            <div class="col-md-12">
+                                                {!! $answer->body_html !!}
+                                            </div>
 
-                                            <div class="row float-end">
-                                                    <div class="col-md-6 offset-md-6">
-                                                            <small class="text-muted">
-                                                                Answered: {{$answer->created_date}}
-                                                            </small>
+                                            <div class="col-md-12">
+                                                    <div class="d-inline-block" style="margin-right: 5px;">
+                                                        @can('update', $answer)
+                                                            <a href="{{route('questions.answers.edit', [$question->id, $answer->id])}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                                        @endcan
                                                     </div>
-                                                    <div class="col-md-2 offset-md-5">
-                                                            <small class="text-muted">
-                                                                <a href="{{$answer->user->url}}" class="pr-2">
-                                                                    <img src="{{$answer->user->avatar}}" >
-                                                                </a>
-                                                            </small>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                            <small class="text-muted">
-                                                                <a href="{{$answer->user->url}}" class="pr-2">
-                                                                    {{$answer->user->name}}
-                                                                </a>
-                                                            </small>
+                                                    <div class="d-inline-block">
+                                                        @can('delete', $answer)
+                                                            <form action="{{route('questions.answers.destroy', [$question->id, $answer->id])}}" method="POST">
+                                                                @method('DELETE')    
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                                onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                                            </form>
+                                                        @endcan
+                                                    </div>    
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                    <div class="row float-end">
+                                                            <div class="col-md-7 offset-md-5">
+                                                                    <small class="text-muted">
+                                                                        Answered: {{$answer->created_date}}
+                                                                    </small>
+                                                            </div>
+                                                            <div class="col-md-2 offset-md-5">
+                                                                    <small class="text-muted">
+                                                                        <a href="{{$answer->user->url}}" class="pr-2">
+                                                                            <img src="{{$answer->user->avatar}}" >
+                                                                        </a>
+                                                                    </small>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                    <small class="text-muted">
+                                                                        <a href="{{$answer->user->url}}" class="pr-2">
+                                                                            {{$answer->user->name}}
+                                                                        </a>
+                                                                    </small>
+                                                            </div>
                                                     </div>
                                             </div>
                                     </div>
