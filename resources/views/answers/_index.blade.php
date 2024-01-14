@@ -17,9 +17,26 @@
                                             <a title="This answer is not useful." class="vote-down off">
                                                 <i class="fas fa-caret-down fa-3x"></i>
                                             </a>
-                                            <a title="Mark as best answer. (click again to undo)" class="{{$answer->status}}">
-                                                <i class="fas fa-check fa-2x"></i>
-                                            </a>
+                                            @can('accept', $answer)
+                                                <a title="Mark as best answer. (click again to undo)" 
+                                                class="{{$answer->status}}"
+                                                onclick="event.preventDefault(); document.getElementById('accept-answer-{{$answer->id}}').submit();"
+                                                >
+                                                    <i class="fas fa-check fa-2x"></i>
+                                                </a>
+                                                <form action="{{route('answers.accept', $answer->id)}}" id="accept-answer-{{$answer->id}}" 
+                                                    method="POST" style="display:none;">
+                                                    @csrf
+                                                </form>
+                                            @else
+                                                @if ($answer->is_best)
+                                                    <a title="Best Answer" 
+                                                    class="{{$answer->status}}">
+                                                        <i class="fas fa-check fa-2x"></i>
+                                                    </a>
+                                                @endif
+                                            @endcan
+
                                     </div>
                                     <div class="col-md-10 row">
                                             <div class="col-md-12">

@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AnswersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\AcceptAnswerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +23,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('questions', QuestionsController::class)->except('show');
 Route::get('questions/{slug}', [QuestionsController::class , 'show'])->name('questions.show');
 
 Route::resource('questions.answers', AnswersController::class);
+Route::post('answers/{answers}/accept', AcceptAnswerController::class)->name('answers.accept');
 
 
 

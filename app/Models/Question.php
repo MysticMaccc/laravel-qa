@@ -61,7 +61,12 @@ class Question extends Model
         return Str::markdown($this->body);
     }
 
-    
+    // METHOD
+    public function acceptBestAnswer($answer)
+    {
+            $this->best_answer_id = $answer;
+            $this->save();
+    }
     
     
 }
