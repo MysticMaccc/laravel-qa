@@ -25,10 +25,24 @@
                                     <a title="This question is not useful." class="vote-down off">
                                         <i class="fas fa-caret-down fa-3x"></i>
                                     </a>
-                                    <a title="Click to mark as favorite question. (click again to undo)" class="favorite favorited">
+                                    <a title="Click to mark as favorite question. (click again to undo)"
+                                         class="favorite {{ $question->is_favorited ? 'favorited' : ''  }}"
+                                         {{-- class="favorite {{ Auth::user() ? 'off' : ($question->is_favorited ? 'favorited' : '' ) }}" di gumagana --}}
+                                         onclick="event.preventDefault(); document.getElementById('favorite-question-{{$question->id}}').submit();" 
+                                         >
                                         <i class="fas fa-star fa-2x"></i>
-                                        <span class="favorites-count">123</span>
+                                        <span class="favorites-count">{{ $question->favorites_count }}</span>
                                     </a>
+                                    <form action="{{$question->is_favorited ? 
+                                                    route('questions.unfavorite', ['question' => $question->id]) : 
+                                                    route('questions.favorite', ['question' => $question->id])}}" 
+                                          id="favorite-question-{{$question->id}}" 
+                                        method="POST" style="display:none;">
+                                        @csrf
+                                        @if($question->is_favorited)
+                                            @method('DELETE')
+                                        @endif
+                                    </form>
                             </div>
                             <div class="col-md-10">
                                 {!! $question->body_html !!}
