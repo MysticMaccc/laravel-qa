@@ -27,6 +27,11 @@ class Question extends Model
     {
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //, 'question_id', 'user_id');
     }
+
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
     
     //ENCAPSULATIONS
     public function isFavorited()
@@ -83,5 +88,14 @@ class Question extends Model
             $this->save();
     }
     
+    public function upVotes()
+    {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    public function downVotes()
+    {
+        return $this->votes()->wherePivot('vote', -1);
+    }
     
 }

@@ -24,6 +24,11 @@ class Answer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
+
     //ENCAPSULATION
     public function getBodyHtmlAttribute()
     {
@@ -62,5 +67,16 @@ class Answer extends Model
         static::deleted(function ($answer){
             $answer->question->decrement('answers_count');
         });
+    }
+
+
+    public function upVotes()
+    {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    public function downVotes()
+    {
+        return $this->votes()->wherePivot('vote', -1);
     }
 }
