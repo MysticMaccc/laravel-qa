@@ -77,7 +77,17 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-        return Str::markdown($this->body);
+        return clean(Str::markdown($this->body));
+    }
+
+    public function getExcerptAttribute()
+    {
+        return $this->Excerpt();
+    }
+
+    public function Excerpt()
+    {
+        return Str::limit(strip_tags($this->getBodyHtmlAttribute()), 250);
     }
 
     // METHOD

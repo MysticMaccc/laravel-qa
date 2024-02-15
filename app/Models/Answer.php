@@ -6,6 +6,7 @@ use App\VotableTrait;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Mews\Purifier\Facades\Purifier;
 
 class Answer extends Model
 {
@@ -31,7 +32,7 @@ class Answer extends Model
     //ENCAPSULATION
     public function getBodyHtmlAttribute()
     {
-        return Str::markdown($this->body);
+        return Purifier::clean(Str::markdown($this->body));
     }
 
     public function getCreatedDateAttribute()

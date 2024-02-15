@@ -1,14 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header row">
-                        <div class="col-md-4"><h2>All Questions</h2></div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header row">
+                        <div class="col-md-4">
+                            <h2>All Questions</h2>
+                        </div>
                         <div class="col-md-4 offset-md-4 ">
-                            <a href="{{route('questions.create')}}" class="btn btn-outline-secondary float-end">Ask Question</a>
+                            <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary float-end">Ask
+                                Question</a>
                         </div>
                     </div>
                 </div>
@@ -16,26 +19,28 @@
                 <div class="card-body">
                     @include('layouts._messages')
                     @foreach ($questions as $question)
-                            <div class="row">
-                                <div class="col-md-1 counters">
-                                    <div class="vote">
-                                        <strong>{{ $question->votes_count }}</strong> {{ Str::plural('vote', $question->votes_count) }}
-                                    </div>                            
-                                    <div class="status {{ $question->status }}">
-                                        <strong>{{ $question->answers_count }}</strong> {{ Str::plural('answer', $question->answers_count) }}
-                                    </div>                            
-                                    <div class="view">
-                                        <strong>{{ $question->views}}</strong> {{Str::plural('view', $question->views)}}
-                                    </div>                            
+                        <div class="row">
+                            <div class="col-md-1 counters">
+                                <div class="vote">
+                                    <strong>{{ $question->votes_count }}</strong>
+                                    {{ Str::plural('vote', $question->votes_count) }}
                                 </div>
-                                <div class="col-md-11">
-                                    <h3 class="mt-2 row">
-                                        <div class="col-md-10">
-                                            <a href="{{ $question->url }}">{{ $question->title }}</a>
-                                        </div>
-                                        <div class="col-md-2">
-                                            {{-- authorization using gates --}}
-                                            {{-- @can('update-question', $question)
+                                <div class="status {{ $question->status }}">
+                                    <strong>{{ $question->answers_count }}</strong>
+                                    {{ Str::plural('answer', $question->answers_count) }}
+                                </div>
+                                <div class="view">
+                                    <strong>{{ $question->views }}</strong> {{ Str::plural('view', $question->views) }}
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <h3 class="mt-2 row">
+                                    <div class="col-md-10">
+                                        <a href="{{ $question->url }}">{{ $question->title }}</a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{-- authorization using gates --}}
+                                        {{-- @can('update-question', $question)
                                                 <a href="{{route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info float-end">Edit</a>
                                             @endcan
                                             @can('delete-question', $question)
@@ -46,38 +51,39 @@
                                                     onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                                                 </form>
                                             @endcan --}}
-                                            
-                                            @can('update', $question)
-                                                <a href="{{route('questions.edit', $question->id)}}" class="btn btn-sm btn-outline-info float-end">Edit</a>
-                                            @endcan
-                                            @can('delete', $question)
-                                                <form action="{{route('questions.destroy', $question->id)}}" method="POST">
-                                                    @method('DELETE')    
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger float-end" 
+
+                                        @can('update', $question)
+                                            <a href="{{ route('questions.edit', $question->id) }}"
+                                                class="btn btn-sm btn-outline-info float-end">Edit</a>
+                                        @endcan
+                                        @can('delete', $question)
+                                            <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-danger float-end"
                                                     onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                                </form>
-                                            @endcan
-                                        </div>
-                                    </h3>
-                                    <p class="lead">
-                                        Asked by
-                                        <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                        <small class="text-muted">{{ $question->created_date }}</small>
-                                    </p>
-                                    {{ Str::limit($question->body, 250) }}
-                                </div>
+                                            </form>
+                                        @endcan
+                                    </div>
+                                </h3>
+                                <p class="lead">
+                                    Asked by
+                                    <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
+                                    <small class="text-muted">{{ $question->created_date }}</small>
+                                </p>
+                                <div class="excerpt">{{ $question->excerpt }}</div>
                             </div>
-                            <hr>
+                        </div>
+                        <hr>
                     @endforeach
-                    
+
                     <div class="mx-auto">
-                        {{ $questions->links("pagination::bootstrap-5") }}
+                        {{ $questions->links('pagination::bootstrap-5') }}
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 @endsection
