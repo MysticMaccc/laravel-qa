@@ -38,8 +38,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
-        Route::bind('slug', function($slug){
-            return Question::where('slug', $slug)->first() ?? abort(404);
+        Route::bind('slug', function ($slug) {
+            // return Question::with(['answers.user', 'answers' => function ($query) {
+            //         $query->orderBy('votes_count', 'Desc');
+            // }])->where('slug', $slug)->first() ?? abort(404);
+            return Question::with(['answers.user'])->where('slug', $slug)->first() ?? abort(404);
         });
     }
 }

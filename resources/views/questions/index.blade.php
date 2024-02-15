@@ -18,6 +18,11 @@
 
                 <div class="card-body">
                     @include('layouts._messages')
+                    @if (!count($questions) > 0)
+                        <div class="alert alert-warning mt-5">
+                            <strong>Sorry! there are no questions available</strong>
+                        </div>
+                    @endif
                     @foreach ($questions as $question)
                         <div class="row">
                             <div class="col-md-1 counters">
