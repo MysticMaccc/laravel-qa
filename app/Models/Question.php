@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\VotableTrait;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class Question extends Model
 {
+    use VotableTrait;
     use HasFactory;
     protected $fillable = ['title','body'];
 
@@ -28,10 +30,7 @@ class Question extends Model
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //, 'question_id', 'user_id');
     }
 
-    public function votes()
-    {
-        return $this->morphToMany(User::class, 'votable');
-    }
+    
     
     //ENCAPSULATIONS
     public function isFavorited()
@@ -87,15 +86,5 @@ class Question extends Model
             $this->best_answer_id = $answer;
             $this->save();
     }
-    
-    public function upVotes()
-    {
-        return $this->votes()->wherePivot('vote', 1);
-    }
 
-    public function downVotes()
-    {
-        return $this->votes()->wherePivot('vote', -1);
-    }
-    
 }
