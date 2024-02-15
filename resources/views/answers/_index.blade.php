@@ -29,22 +29,7 @@
                                 @csrf
                                 <input type="hidden" name="vote" value="-1">
                             </form>
-                            @can('accept', $answer)
-                                <a title="Mark as best answer. (click again to undo)" class="{{ $answer->status }}"
-                                    onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
-                                    <i class="fas fa-check fa-2x"></i>
-                                </a>
-                                <form action="{{ route('answers.accept', $answer->id) }}"
-                                    id="accept-answer-{{ $answer->id }}" method="POST" style="display:none;">
-                                    @csrf
-                                </form>
-                            @else
-                                @if ($answer->is_best)
-                                    <a title="Best Answer" class="{{ $answer->status }}">
-                                        <i class="fas fa-check fa-2x"></i>
-                                    </a>
-                                @endif
-                            @endcan
+                            
 
                         </div>
                         <div class="col-md-10 row">
@@ -74,27 +59,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="row float-end">
-                                    <div class="col-md-7 offset-md-5">
-                                        <small class="text-muted">
-                                            Answered: {{ $answer->created_date }}
-                                        </small>
-                                    </div>
-                                    <div class="col-md-2 offset-md-5">
-                                        <small class="text-muted">
-                                            <a href="{{ $answer->user->url }}" class="pr-2">
-                                                <img src="{{ $answer->user->avatar }}">
-                                            </a>
-                                        </small>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <small class="text-muted">
-                                            <a href="{{ $answer->user->url }}" class="pr-2">
-                                                {{ $answer->user->name }}
-                                            </a>
-                                        </small>
-                                    </div>
-                                </div>
+                                @include('shared._author', [
+                                    'model' => $answer,
+                                    'label' => 'Answered'
+                                ])
                             </div>
                         </div>
                         <hr>
