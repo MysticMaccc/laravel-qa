@@ -36,7 +36,7 @@
         @csrf
         <input type="hidden" name="vote" value="-1">
     </form>
-
+    
     @if ($model->whereInstanceOf(Question::class))
         @include('shared._favorite', [
             'model' => $model,
